@@ -1,0 +1,91 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <h1>SIGNUP</h1>
+
+            <div class="col-md-8 pt-5 mt-5">
+                <form id="Signup">
+                    <div class="form-group">
+
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
+                            placeholder="Enter Name" name="name" required />
+
+
+                        <label for="mobile">Mobile</label>
+                        <input type="number" class="form-control" id="mobile" aria-describedby="emailHelp"
+                            placeholder="Enter mobile" name="mobile" required />
+
+
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                            placeholder="Enter email" name="email" required />
+
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"
+                            required />
+                    </div>
+
+
+
+                    <label for="dob">DOB</label>
+                    <input type="date" class="form-control" id="date" aria-describedby="emailHelp"
+                        placeholder="Enter Date Of Birth" name="date" required />
+                    <button type="submit" class="btn btn-success mt-2" id="btn">Signup</button>
+                    <a href="http://localhost:5000/user/login" class="btn btn-primary mt-2">                        
+                            Login                        
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    btn.addEventListener("click", (e) => {
+        e.preventDefault()
+
+        let name = document.getElementById("name").value
+        let mobile = document.getElementById("mobile").value
+        let mail = document.getElementById("email").value
+        let password = document.getElementById("password").value
+        let dob = document.getElementById("date").value
+        let btn = document.getElementById("btn")
+        console.log(name);
+
+
+        if (name != "" && mobile != "" && mail != "" && password != "" && dob != "") {
+
+            $.ajax({
+                url: "/user/signup",
+                data: $("#Signup").serialize(),
+                method: "post",
+                success: (cb) => {
+                    console.log(cb);
+                    if (cb) {
+                        alert(cb.msg)
+
+                        if (cb.err)
+                            location.reload()
+                        else {
+                            window.location.href = "http://localhost:5000/user/home";
+                        }
+                    }
+                    else {
+                        alert("error occured while signup")
+                    }
+
+                },
+
+            })
+        }
+        else {
+
+            alert("invalid input")
+        }
+    })
+
+</script>

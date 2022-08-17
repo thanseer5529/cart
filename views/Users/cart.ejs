@@ -1,0 +1,117 @@
+<section>
+    <div class="container">
+        <h1>CART</h1>
+
+        <a href="http://localhost:5000/user/home">
+
+            <button class="btn btn-success">home</button>
+
+        </a>
+        <table class="table mt-5" style="text-align: center">
+            <thead>
+                <tr>
+                    <td scope="col">Item</td>
+                    <td scope="col">Title</td>
+                    <td scope="col">price</td>
+                    <td scope="col">description</td>
+                    <td scope="col" colspan="3">Quantity</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0;i<data.cart.length;i++) { %>
+
+
+                    <tr id="{{product.pro_id}}row">
+
+                        <td><img style="width: 70px; height: 70px;" src="/images/<%=data.cart[i].path%>"
+                                alt="image is not available yet" /></td>
+                        <td>
+                            <%=data.cart[i].name%>
+                        </td>
+                        <td>
+                            <%=data.cart[i].price%>
+                        </td>
+                        <td>
+                            <%=data.cart[i].description%>
+                        </td>
+
+                        <td>
+                            <button id="{{<%=data.cart[i].id%>}}-" class="cart-item-count mr-3 min"
+                                onclick="cart_dcr('<%=data.cart[i].id%>')">-</button>
+                        </td>
+                        <td id="{{this.product.pro_id}}count" class="lol">
+                            <%=data.cart[i].count%>
+                        </td>
+                        <td>
+                            <button id="{{<%=data.cart[i].id%>}}+" class="cart-item-count ml-3"
+                                onclick="cart_inc('<%=data.cart[i].id%>')">+</button>
+                        </td>
+                        <td>                            
+                        </td>
+                    </tr>
+                    <%}%>
+            </tbody>
+        </table>
+        <hr />
+        <div class="float-right pr-5" id='order_div'>
+            <h5 class="float-right mr-5">Total: RS.
+                <span id="total_amt">
+                    <%=data.total%>
+                </span>
+            </h5>
+            <a href="/user/place_order" class="btn btn-success mt-3" style="width: 100%;"><b>Place Order</b></a>
+        </div>
+    </div>
+</section>
+<script>
+    cls = document.getElementsByClassName('lol')
+    length = document.getElementsByClassName('lol').length
+    for (i = 0; i < length; i++) {
+        if (cls.item(i).innerText == 1) {
+            document.querySelectorAll('.min')[i].style.display = "none"
+        }
+    }
+
+
+    function cart_dcr(id) {
+        $.ajax({
+            url: "/user/cart_dec/" + id,
+            method: "post",
+            success: (data) => {
+             
+                if (data.err) {
+                    window.location.href = "http://localhost:5000/user/login"
+
+                }
+                else {
+                    if (data.alert) {
+                        alert(data.alert)
+                    }
+                    else {
+                        location.reload()
+                    }
+                }
+
+            },
+        });
+    }
+    function cart_inc(id) {
+        $.ajax({
+            url: "/user/cart_inc/" + id,
+            method: "post",
+            success: (data) => {
+                if (data.err) {
+                    window.location.href = "http://localhost:5000/user/login"
+                }
+                else {
+                    if (data.alert) {
+                        alert(data.alert)
+                    }
+                    else {
+                        location.reload()
+                    }
+                }
+            },
+        });
+    }     
+</script>

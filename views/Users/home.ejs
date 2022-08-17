@@ -1,0 +1,60 @@
+<section>
+
+    <div class="container">
+    <h1>HOME</h1>
+
+        <a href="http://localhost:5000/user/cart">
+
+            <button class="btn btn-success">cart</button>
+
+        </a>
+        <div class="col-xs-1 row  " align="center">
+            <% for(let i=0;i<data.length;i++) { %>
+
+                <div class="col-md-3  col-lg-2 col-5 mr-4 pl-2 mt-3 ">
+                    <div class="card bg-light" style="width: 12rem;">
+                        <img class="card-img-top" src="/images/<%=data[i].path%>" width="8rem" height="150rem"
+                            alt="Card image cap" />
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <%=data[i].name%>
+                            </h3>
+                            <p class="card-text">
+                                <%=data[i].price%>
+                            </p>
+                            <p class="card-text">
+                                <%=data[i].description%>
+                            </p>
+                            <button class="btn btn-primary" onclick="addtocart('<%=data[i].id%>')">Add to
+                                Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+        </div>
+    </div>
+</section>
+
+<script>
+        
+
+    function addtocart(id) {
+        $.ajax({
+            url: "/user/addtocart",
+            method: "post",
+            data: {                
+                id
+            },
+            success: (cb) => {
+                if (cb.err) {
+                    location.reload()
+                }
+                else {
+
+                    console.log(cb);
+                    alert(cb)
+                }
+            }
+        })
+    }
+</script>

@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />    
+</head>
+
+<body>
+    <h1 style="text-align:center;">Invoice</h1>
+    <table border="2px"  style="text-align:center;" >
+        <thead>
+            <tr>
+
+                <th class="gap">Product Name</th>
+                <th class="gap">Product Price</th>
+                <th class="gap">Product Qty</th>
+                <th class="gap">Product Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each cart}}
+            <tr>
+                <td class="gap">{{this.name}}</td>
+                <td class="gap">{{this.price}}</td>
+                <td class="gap">{{this.count}}</td>
+                <td class="gap">{{this.total}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <h2>Net total:{{total}}</h2>
+
+</body>
+<style>
+    .gap{
+        padding: 15px;
+    }
+    body{
+        display: grid;
+        justify-content: center;
+
+    }
+</style>
+</html>

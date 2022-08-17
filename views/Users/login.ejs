@@ -1,0 +1,68 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <h1>LOGIN</h1>
+            <div class="col-md-8 pt-5 mt-5">
+                <form id="Login">
+                    <div class="form-group">
+
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                            placeholder="Enter email" name="email" required />
+
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password"
+                            required />
+                    </div>
+                    <button class="btn btn-primary mt-2" id="btn">Login</button>
+                    <a href="http://localhost:5000/user/signup" class="btn mt-2 btn-success">
+
+                        Signup
+
+                    </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+    let password = document.getElementById("password")
+    let email = document.getElementById("email")
+    let btn = document.getElementById("btn")
+
+    btn.addEventListener("click", (e) => {
+        if (password.value != "" && email.value != "") {
+            e.preventDefault()
+            $.ajax({
+                url: "/user/login",
+                method: "post",
+                data: $("#Login").serialize(),
+                success: (cb) => {
+                    console.log(cb);
+                    if (cb) {
+                        alert(cb.msg)
+
+                        if (cb.err) {
+                            location.reload()
+                        }
+                        else {
+                            window.location.href = "http://localhost:5000/user/home";
+                        }
+                    }
+                    else {
+                        alert("error occured while login")
+
+                    }
+                }
+
+            })
+        }
+        else{
+            alert("invalid input")
+        }
+    })
+</script>
